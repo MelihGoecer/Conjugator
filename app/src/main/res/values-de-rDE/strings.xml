@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Konjugator</string>
+
+    //languages
+    <string-array name="languages_array">
+        <item>Deutsch</item>
+        <item>Englisch</item>
+        <item>Französisch</item>
+        <item>Türkisch</item>
+        <item>Russisch</item>
+        <item>Spanisch</item>
+        <item>Italienisch</item>
+        <item>Polnisch</item>
+        <item>Finnisch</item>
+        <item>Dänisch</item>
+        <item>Griechisch</item>
+        <item>Norwegisch</item>
+        <item>Niederländisch</item>
+        <item>Kroatisch</item>
+        <item>Arabisch</item>
+        <item>Mongolisch</item>
+        <item>Portugiesisch\n(Portugal, Brasilien)</item>
+        <item>Chinesisch (vereinfacht)</item>
+    </string-array>
+
+    <string-array name="languages_array_reverse">
+        <item>Englisch</item>
+        <item>Norwegisch</item>
+        <item>Griechisch</item>
+        <item>Dänisch</item>
+        <item>Finnisch</item>
+        <item>Polnisch</item>
+        <item>Italienisch</item>
+        <item>Spanisch</item>
+        <item>Russisch</item>
+        <item>Türkisch</item>
+        <item>Französisch</item>
+        <item>Deutsch</item>
+        <item>Chinesisch (vereinfacht)</item>
+        <item>Niederländisch</item>
+        <item>Kroatisch</item>
+        <item>Arabisch</item>
+        <item>Mongolisch</item>
+        <item>Portugiesisch\n(Portugal, Brasilien)</item>
+    </string-array>
+
+    <string-array name="languages_array_reverse2">
+        <item>Französisch</item>
+        <item>Italienisch</item>
+        <item>Norwegisch</item>
+        <item>Russisch</item>
+        <item>Türkisch</item>
+        <item>Griechisch</item>
+        <item>Dänisch</item>
+        <item>Deutsch</item>
+        <item>Finnisch</item>
+        <item>Polnisch</item>
+        <item>Spanisch</item>
+        <item>Englisch</item>
+        <item>Arabisch</item>
+        <item>Niederländisch</item>
+        <item>Kroatisch</item>
+        <item>Mongolisch</item>
+        <item>Chinesisch (vereinfacht)</item>
+        <item>Portugiesisch\n(Portugal, Brasilien)</item>
+    </string-array>
+
+    <string-array name="languages_array_conjugation">
+        <item>Englisch</item>
+        <item>Deutsch</item>
+        <item>Französisch</item>
+        <item>Spanisch</item>
+        <item>Italienisch</item>
+        <item>Russisch</item>
+        <item>Dänisch</item>
+        <item>Finnisch</item>
+        <item>Niederländisch</item>
+        <item>Polnisch</item>
+        <item>Schwedisch</item>
+        <item>Portugiesisch</item>
+        <item>Automatisch</item>
+    </string-array>
+
+    <string name="Automatic_String">Automatisch</string>
+
+    <string-array name="allLanguagesLong">
+        <item>Englisch</item>
+        <item>Deutsch</item>
+        <item>Französisch</item>
+        <item>Spanisch</item>
+        <item>Italienisch</item>
+        <item>Russisch</item>
+        <item>Dänisch</item>
+        <item>Finnisch</item>
+        <item>Niederländisch</item>
+        <item>Polnisch</item>
+        <item>Schwedisch</item>
+        <item>Portugiesisch</item>
+    </string-array>
+
+    <string-array name="languagesDictionary">
+        <item>Englisch</item>
+        <item>Französisch</item>
+        <item>Russisch</item>
+        <item>Deutsch</item>
+        <item>Spanisch</item>
+        <item>Türkisch</item>
+    </string-array>
+
+    <string name="language_german">Deutsch</string>
+    <string name="language_english">Englisch</string>
+
+    <string name="delete_all">Alles löschen</string>
+    <string name="tab_text_1">Wörterbuch</string>
+    <string name="tab_text_2">Verlauf</string>
+
+    <string name="title_online_dictionary">Online Wörterbuch</string>
+    <string name="title_translator">Übersetzer</string>
+    <string name="title_conjugation">Konjugieren</string>
+
+    <string name="recent">Kürzlich gesucht</string>
+    <string name="tap_to_search">Tippen, um zu suchen</string>
+    <string name="delete">LÖSCHEN</string>
+    <string name="search_conjugation">Suchen…</string>
+    <string name="translate">ÜBERSETZEN</string>
+    <string name="speak_translator">Sprechen Sie…</string>
+    <string name="try_again">Nochmal versuchen</string>
+    <string name="recently_translated">kürzlich übersetzt</string>
+    <string name="view_all_recent_translations">Gesamten Verlauf ansehen</string>
+    <string name="favourites">Favoriten</string>
+    <string name="change_language">Wähle eine andere Sprache</string>
+    <string name="no_internet">Keine Internetverbindung</string>
+    <string name="failed">Etwas ist schief gelaufen</string>
+    <string name="definition_title">Definition:</string>
+    <string name="example_title">Beispiel:</string>
+    <string name="click">Tippe</string>
+    <string name="to_search">um zu suchen</string>
+    <string name="type_more_letters">Gib mehr Buchstaben ein</string>
+    <string name="no_results_found">Keine Ergebnisse gefunden</string>
+    <string name="undo">Rückgängig</string>
+    <string name="select">Auswählen</string>
+    <string name="permission_denied">Erlaubnis verweigert!</string>
+    <string name="saving">wird gespeichert…</string>
+    <string name="unsupportedLanguage">Diese Sprache wird nicht unterstützt</string>
+    <string name="filter">Filter</string>
+    <string name="tippe_auf_ein_feld">Tippe auf ein Feld</string>
+    <string name="favourite">Favorit</string>
+    <string name="sprachausgabe">Sprachausgabe</string>
+    <string name="endungen_markieren">Endungen markieren</string>
+
+</resources>

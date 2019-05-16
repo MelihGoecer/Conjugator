@@ -1,0 +1,77 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.translator_conjugator_dictionary"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 3
+        versionName "1.2"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0-alpha04'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha04'
+    implementation 'androidx.annotation:annotation:1.1.0-beta01'
+    //firebase-firestore
+    implementation 'com.google.firebase:firebase-database:16.1.0'
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    //material design
+    implementation 'com.google.android.material:material:1.0.0'
+    //circular imageView
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+    //recyclerView
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    //html
+    implementation 'com.android.volley:volley:1.1.1'
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    //firestore
+    implementation 'com.google.firebase:firebase-core:16.0.8'
+    implementation 'com.google.firebase:firebase-firestore:18.2.0'
+    //gson
+    implementation 'com.google.code.gson:gson:2.8.5'
+    //architecture components
+    def lifecycle_version = "2.0.0"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    //custom spinner
+    implementation 'com.jaredrummler:material-spinner:1.3.1'
+    //expandableLayout
+    implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
+    //google ads
+    implementation 'com.google.android.gms:play-services-ads:17.2.0'
+    //custom layoutmanager
+    implementation 'com.azoft.carousellayoutmanager:carousel:1.2.4'
+
+    implementation 'com.github.ybq:Android-SpinKit:1.2.0'
+
+    implementation 'com.android.support:multidex:1.0.3'
+
+}
+repositories {
+    mavenCentral()
+}

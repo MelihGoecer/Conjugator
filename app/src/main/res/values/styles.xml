@@ -1,0 +1,30 @@
+<resources>
+
+    <style name="AppThemeNoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/Blue</item>
+        <item name="colorPrimaryDark">@color/DarkBlue</item>
+        <item name="colorAccent">@color/AccentPurple</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="YourActionModeStyle" parent="Widget.AppCompat.ActionMode">
+        <item name="height">?attr/actionBarSize</item>
+        <item name="titleTextStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Title</item>
+        <item name="subtitleTextStyle">@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle</item>
+        <item name="closeItemLayout">@layout/close_item_layout</item>
+    </style>
+
+    <style name="toolbar_textView_title" >
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/cherry_swash</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.Medium</item>
+    </style>
+
+    <style name="Theme.MyFancyTheme" parent="@style/ThemeOverlay.AppCompat.Light">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="android:editTextColor">@android:color/white</item>
+        <item name="android:textColorHint">@android:color/white</item>
+    </style>
+
+</resources>

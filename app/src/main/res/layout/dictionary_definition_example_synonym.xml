@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingBottom="2dp"
+    android:layout_marginBottom="16dp">
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="4dp"
+                android:paddingBottom="2dp"
+                android:paddingTop="2dp">
+
+                <TextView
+                    android:id="@+id/textView_definition_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/definition_title"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/textView_definition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textView_definition_title"
+                    android:text="Definition"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+
+                <CheckBox
+                    android:id="@+id/checkBox_dictionary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginEnd="8dp"
+                    android:layout_alignBaseline="@id/textView_definition_title"
+                    android:elevation="2dp"
+                    android:layout_alignParentEnd="true"/>
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView_definition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView3">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="4dp"
+                android:paddingBottom="2dp"
+                android:paddingTop="2dp">
+
+                <TextView
+                    android:id="@+id/textView_example_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/example_title"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/textView_example"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textView_example_title"
+                    android:text="Example"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView_definition">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView_synonyms_title"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:text="Synonyms"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/imageView_dropdown_example"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="0dp"
+                    android:scaleX="1.2"
+                    android:scaleY="1.2"
+                    android:layout_toEndOf="@id/textView_synonyms_title"
+                    android:src="@drawable/ic_arrow_drop_down" />
+
+                <net.cachapa.expandablelayout.ExpandableLayout
+                    android:id="@+id/expandable_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:el_duration="500"
+                    app:el_expanded="false"
+                    android:layout_below="@id/textView_synonyms_title"
+                    android:orientation="vertical">
+
+                     <LinearLayout
+                        android:id="@+id/linearLayout_expandableLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
+
+
+                </net.cachapa.expandablelayout.ExpandableLayout>
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

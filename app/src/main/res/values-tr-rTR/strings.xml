@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Conjugator</string>
+
+    //languages
+    <string-array name="languages_array">
+        <item>Almanca</item>
+        <item>İngilizce</item>
+        <item>Fransızca</item>
+        <item>Türkçe</item>
+        <item>Rusça</item>
+        <item>İspanyolca</item>
+        <item>İtalyanca</item>
+        <item>Lehçe</item>
+        <item>Fince</item>
+        <item>Danca</item>
+        <item>Yunanca</item>
+        <item>Norveççe</item>
+        <item>Hollandalı</item>
+        <item>Hırvat</item>
+        <item>Arapça</item>
+        <item>Moğol</item>
+        <item>Portekizce\n(Portekiz, Brezilya)</item>
+        <item>Çince (basitleştirilmiş)</item>
+    </string-array>
+
+    <string-array name="languages_array_reverse">
+        <item>İngilizce</item>
+        <item>Norveççe</item>
+        <item>Yunanca</item>
+        <item>Danca</item>
+        <item>Fince</item>
+        <item>Lehçe</item>
+        <item>İtalyanca</item>
+        <item>İspanyolca</item>
+        <item>Rusça</item>
+        <item>Türkçe</item>
+        <item>Fransızca</item>
+        <item>Almanca</item>
+        <item>Çince (basitleştirilmiş)</item>
+        <item>Hollandalı</item> 
+        <item>Hırvat</item> 
+        <item>Arapça</item>
+        <item>Moğol</item> 
+        <item>Portekizce\n(Portekiz, Brezilya)</item>
+    </string-array>
+
+    <string-array name="languages_array_reverse2">
+        <item>Fransızca</item>
+        <item>İtalyanca</item>
+        <item>Norveççe</item>
+        <item>Rusça</item>
+        <item>Türkçe</item>
+        <item>Yunanca</item>
+        <item>Danca</item>
+        <item>Almanca</item>
+        <item>Fince</item>
+        <item>Lehçe</item>
+        <item>İspanyolca</item>
+        <item>İngilizce</item>
+        <item>Arapça</item>      
+        <item>Hollandalı</item>
+        <item>Hırvat</item>
+        <item>Moğol</item>
+        <item> Çince (basitleştirilmiş)</item>
+        <item> Portekizce \ n (Portekiz, Brezilya)</item>
+    </string-array>
+
+    <string-array name="languages_array_conjugation">
+        <item>İngilizce</item>
+        <item>Almanca</item>
+        <item>Fransızca</item>
+        <item>İspanyolca</item>
+        <item>İtalyanca</item>
+        <item>Rusça</item>
+        <item>Danca</item>
+        <item>Fince</item>
+        <item>Flemenkçe</item>
+        <item>Lehçe</item>
+        <item>İsveççe</item>
+        <item>Portekizce</item>
+        <item>Otomatik</item>
+    </string-array>
+
+    <string name="Automatic_String">Otomatik</string>
+
+    <string-array name="allLanguagesLong">
+        <item>İngilizce</item>
+        <item>Almanca</item>
+        <item>Fransızca</item>
+        <item>İspanyolca</item>
+        <item>İtalyanca</item>
+        <item>Rusça</item>
+        <item>Danca</item>
+        <item>Fince</item>
+        <item>Flemenkçe</item>
+        <item>Lehçe</item>
+        <item>İsveççe</item>
+        <item>Portekizce</item>
+    </string-array>
+
+    <string-array name="languagesDictionary">
+        <item>İngilizce</item>
+        <item>Fransızca</item>
+        <item>Rusça</item>
+        <item>Almanca</item>
+        <item>İspanyolca</item>
+        <item>Türkçe</item>
+    </string-array>
+
+    <string name="language_german">Almanca</string>
+    <string name="language_english">Ingilizce</string>
+
+    <string name="delete_all">Hepsini sil</string>
+    <string name="tab_text_1">Sözlük</string>
+    <string name="tab_text_2">Verlauf</string>
+
+    <string name="title_online_dictionary">Online Wörterbuch</string>
+    <string name="title_translator">Tercüme</string>
+    <string name="title_conjugation">Çekim</string>
+
+    <string name="recent">Son arananlar</string>
+    <string name="tap_to_search">Arama için tıklayın</string>
+    <string name="delete">SİL</string>
+    <string name="search_conjugation">Ara…</string>
+    <string name="translate">TERCÜME</string>
+    <string name="speak_translator">Konuşun…</string>
+    <string name="try_again">Tekrar dene</string>
+    <string name="recently_translated">Son tercüme edilenler</string>
+    <string name="view_all_recent_translations">Son tercüme edilenlerin tümünü göster</string>
+    <string name="favourites">Favoriler</string>
+    <string name="change_language">Başka dil seç</string>
+    <string name="no_internet">İnternet bağlantısı yok</string>
+    <string name="failed">Birşeyler düzgün gitmedi</string>
+    <string name="definition_title">Tanım:</string>
+    <string name="example_title">Örnek:</string>
+    <string name="click">Tıklayın</string>
+    <string name="to_search">Aramak için</string>
+    <string name="type_more_letters">Daha fazla harf gir</string>
+    <string name="unsupportedLanguage">Bu dil desteklenmiyor</string>
+    <string name="tippe_auf_ein_feld">Bir alana dokunun</string>
+    <string name="sprachausgabe">Konuşma</string>
+    <string name="endungen_markieren">İşaretli sonlar</string>
+
+</resources>

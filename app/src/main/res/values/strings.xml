@@ -1,0 +1,187 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Conjugator</string>
+    <string name="ADMOB_APP_ID" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
+
+    <string name="AD_UNIT_CONJUGATION" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="AD_UNIT_DICTIONARY" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="AD_UNIT_RECENT_TRANS" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="AD_UNIT_FAVOURITES" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="AD_UNIT_TRANSLATOR" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+
+<!--
+    <string name="ADMOB_APP_ID" translatable="false">ca-app-pub-4164598305330576~2138695879</string>
+
+    <string name="AD_UNIT_CONJUGATION" translatable="false">ca-app-pub-4164598305330576/6847567817</string>
+    <string name="AD_UNIT_DICTIONARY" translatable="false">ca-app-pub-4164598305330576/5913760091</string>
+    <string name="AD_UNIT_RECENT_TRANS" translatable="false">ca-app-pub-4164598305330576/4909154820</string>
+    <string name="AD_UNIT_FAVOURITES" translatable="false">ca-app-pub-4164598305330576/4623527449</string>
+    <string name="AD_UNIT_TRANSLATOR" translatable="false">ca-app-pub-4164598305330576/3674609562</string>
+-->
+
+    //languages
+    <string-array name="languages_array">
+        <item>German</item>
+        <item>English</item>
+        <item>French</item>
+        <item>Turkish</item>
+        <item>Russian</item>
+        <item>Spanish</item>
+        <item>Italian</item>
+        <item>Polish</item>
+        <item>Finnish</item>
+        <item>Danish</item>
+        <item>Greek</item>
+        <item>Norwegian</item>
+        <item>Dutch</item>
+        <item>Croatian</item>
+        <item>Arabic</item>
+        <item>Mongolian</item>
+        <item>Portuguese\n(Portugal, Brazil)</item>
+        <item>Chinese (simplified)</item>
+    </string-array>
+
+    <string-array name="languages_array_reverse">
+        <item>English</item>
+        <item>Norwegian</item>
+        <item>Greek</item>
+        <item>Danish</item>
+        <item>Finnish</item>
+        <item>Polish</item>
+        <item>Italian</item>
+        <item>Spanish</item>
+        <item>Russian</item>
+        <item>Turkish</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Chinese (simplified)</item>
+        <item>Dutch</item>
+        <item>Croatian</item>
+        <item>Arabic</item>
+        <item>Mongolian</item>
+        <item>Portuguese\n(Portugal, Brazil)</item>
+    </string-array>
+
+    <string-array name="languages_array_reverse2">
+        <item>French</item>
+        <item>Italian</item>
+        <item>Norwegian</item>
+        <item>Russian</item>
+        <item>Turkish</item>
+        <item>Greek</item>
+        <item>Danish</item>
+        <item>German</item>
+        <item>Finnish</item>
+        <item>Polish</item>
+        <item>Spanish</item>
+        <item>English</item>
+        <item>Arabic</item>
+        <item>Dutch</item>
+        <item>Croatian</item>
+        <item>Mongolian</item>
+        <item>Chinese (simplified)</item>
+        <item>Portuguese\n(Portugal, Brazil)</item>
+    </string-array>
+
+    <string-array name="languages_array_conjugation">
+        <item>English</item>
+        <item>German</item>
+        <item>French</item>
+        <item>Spanish</item>
+        <item>Italian</item>
+        <item>Russian</item>
+        <item>Danish</item>
+        <item>Finnish</item>
+        <item>Dutch</item>
+        <item>Polish</item>
+        <item>Swedish</item>
+        <item>Portuguese</item>
+        <item>Automatic</item>
+    </string-array>
+
+    <string name="Automatic_String">Automatic</string>
+
+    <string-array name="allLanguagesLong">
+        <item>English</item>
+        <item>German</item>
+        <item>French</item>
+        <item>Spanish</item>
+        <item>Italian</item>
+        <item>Russian</item>
+        <item>Danish</item>
+        <item>Finnish</item>
+        <item>Dutch</item>
+        <item>Polish</item>
+        <item>Swedish</item>
+        <item>Portuguese</item>
+    </string-array>
+
+    <string-array translatable="false" name="allLanguagesShort">
+        <item>en</item>
+        <item>de</item>
+        <item>fr</item>
+        <item>es</item>
+        <item>it</item>
+        <item>ru</item>
+        <item>da</item>
+        <item>fi</item>
+        <item>nl</item>
+        <item>pl</item>
+        <item>sv</item>
+        <item>pt</item>
+    </string-array>
+
+    <string-array name="languagesDictionary">
+        <item>English</item>
+        <item>French</item>
+        <item>Russian</item>
+        <item>German</item>
+        <item>Spanish</item>
+        <item>Turkish</item>
+    </string-array>
+
+    <string name="language_german">German</string>
+    <string name="language_english">English</string>
+
+    <string name="title_online_dictionary">Online dictionary</string>
+    <string name="title_translator">Translator</string>
+    <string name="title_conjugation">Conjugate</string>
+
+    <string name="delete_all">Delete all</string>
+    <string name="tab_text_1">Dictionary</string>
+    <string name="tab_text_2">Recent</string>
+    <string name="selected_item_indicator" translatable="false">%1$d Item(s)</string>
+    <string name="recent" translatable="false">Recently searched</string>
+    <string name="tap_to_search">Tap, to search</string>
+    <string name="delete">DELETE</string>
+    <string name="search_conjugation">Search…</string>
+    <string name="verb_conjugated_language" translatable="false">%1$s(%2$s)</string>
+    <string name="translate">TRANSLATE</string>
+    <string name="definition_title">Definition:</string>
+    <string name="example_title">Example:</string>
+    <string name="word" translatable="false">%1$s(%2$s)</string>
+    <string name="speak_translator">Speak…</string>
+    <string name="try_again">try again</string>
+    <string name="recently_translated">recently translated</string>
+    <string name="view_all_recent_translations">View all recent translations</string>
+    <string name="favourites">Favourites</string>
+    <string name="favourite">Favourite</string>
+    <string name="change_language">Change the language</string>
+    <string name="no_internet">No internet connection</string>
+    <string name="failed">Something went wrong</string>
+    <string name="click">Click</string>
+    <string name="to_search">to search</string>
+    <string name="type_more_letters">Type in more letters</string>
+    <string name="no_results_found">No results found</string>
+    <string name="permission_denied">Permission Denied!</string>
+    <string name="undo">UNDO</string>
+    <string name="select">Select</string>
+    <string name="saving">Saving…</string>
+    <string name="unsupportedLanguage">This language is not supported</string>
+    <string name="filter">Filter</string>
+    <string name="tenseblockheader"><u>TenseBlockHeader</u></string>
+    <string name="tippe_auf_ein_feld">Tap on a field</string>
+    <string name="sprachausgabe">Speech</string>
+    <string name="endungen_markieren">Mark endings</string>
+
+
+</resources>

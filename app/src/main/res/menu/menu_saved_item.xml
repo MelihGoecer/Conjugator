@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<item
+    android:title="list"
+    app:showAsAction="always"
+    android:icon="@drawable/ic_baseline_view_list_24px">
+
+    <menu>
+        <item
+            android:id="@+id/menu_column"
+            android:title="column"
+            app:showAsAction="never"
+            android:icon="@drawable/ic_baseline_view_column_24px" />
+
+        <item
+            android:id="@+id/menu_grid"
+            android:title="grid"
+            app:showAsAction="never"
+            android:icon="@drawable/ic_baseline_view_module_24px"/>
+
+        <item
+            android:id="@+id/menu_staggered"
+            android:title="staggered"
+            app:showAsAction="never"
+            android:icon="@drawable/ic_baseline_view_quilt_24px"/>
+
+        <item
+            android:id="@+id/menu_carousel"
+            android:title="carousel"
+            app:showAsAction="never"
+            android:icon="@drawable/ic_baseline_view_carousel_24px" />
+    </menu>
+</item>
+
+
+
+</menu>

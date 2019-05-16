@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/MainActivity_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/PrimaryDarkBlue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                style="@style/toolbar_textView_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_translator" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/adView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp">
+
+            <Spinner
+                android:id="@+id/choose_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/spinner1_shape"
+                app:layout_constraintEnd_toStartOf="@+id/imageButton_swap_langs"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageButton_swap_langs"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="4dp"
+                android:background="?android:attr/windowBackground"
+                app:srcCompat="@drawable/swap_lang"
+                app:layout_constraintEnd_toStartOf="@+id/target_spinner"
+                app:layout_constraintStart_toEndOf="@+id/choose_spinner"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Spinner
+                android:id="@+id/target_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/spinner2_shape"
+                app:layout_constraintEnd_toStartOf="@+id/stub_imageButton_swapLangs"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/imageButton_swap_langs"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ViewStub
+                android:id="@+id/stub_imageButton_swapLangs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inflatedId="@+id/stub_imageButton_swapLangs"
+                android:layout="@layout/holder_imagebutton_swaplangs"
+                app:layout_constraintEnd_toStartOf="@+id/stub_thirdSpinner"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ViewStub
+                android:id="@+id/stub_thirdSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inflatedId="@+id/stub_thirdSpinner"
+                android:layout="@layout/holder_thirdspinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="230dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="4dp"
+                android:textColorHint="@color/darkergray"
+                app:boxCornerRadiusBottomEnd="4dp"
+                app:boxCornerRadiusBottomStart="4dp"
+                app:boxCornerRadiusTopEnd="4dp"
+                app:boxCornerRadiusTopStart="4dp"
+                app:boxStrokeColor="@color/PrimaryDarkBlue"
+                app:layout_constraintEnd_toStartOf="@+id/textOutputLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/choose_spinner">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editText_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="start"
+                    android:imeOptions="actionSearch"
+                    android:inputType="textMultiLine"
+                    android:textSize="18sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/imageView_clear_translator"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:elevation="2dp"
+                android:onClick="clearText"
+                app:srcCompat="@drawable/ic_close"
+                android:tint="@color/Grey"
+                app:layout_constraintBottom_toBottomOf="@+id/textInputLayout"
+                app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
+                app:layout_constraintStart_toStartOf="@+id/textInputLayout"
+                app:layout_constraintTop_toTopOf="@+id/textInputLayout"
+                app:layout_constraintVertical_bias="0.92" />
+
+            <ImageView
+                android:id="@+id/imageView_recognize_speech"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:elevation="2dp"
+                app:srcCompat="@drawable/ic_mic_none"
+                app:layout_constraintBottom_toBottomOf="@+id/textInputLayout"
+                app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
+                app:layout_constraintHorizontal_bias="0.95"
+                app:layout_constraintStart_toStartOf="@+id/textInputLayout"
+                app:layout_constraintTop_toTopOf="@+id/textInputLayout"
+                app:layout_constraintVertical_bias="0.95" />
+
+            <ImageView
+                android:id="@+id/imageView_goto_dictionary"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:elevation="2dp"
+                app:srcCompat="@drawable/ic_curved_arrow_left"
+                app:layout_constraintBottom_toBottomOf="@+id/textInputLayout"
+                app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
+                app:layout_constraintHorizontal_bias="0.05"
+                app:layout_constraintStart_toStartOf="@+id/textInputLayout"
+                app:layout_constraintTop_toTopOf="@+id/textInputLayout"
+                app:layout_constraintVertical_bias="0.95" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textOutputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="230dp"
+                android:layout_marginTop="8dp"
+                android:textColorHint="@color/darkergray"
+                app:boxCornerRadiusBottomEnd="4dp"
+                app:boxCornerRadiusBottomStart="4dp"
+                app:boxCornerRadiusTopEnd="4dp"
+                app:boxCornerRadiusTopStart="4dp"
+                app:boxStrokeColor="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textInputLayout"
+                app:layout_constraintTop_toBottomOf="@+id/target_spinner">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editText_output"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="start"
+                    android:imeOptions="actionSearch"
+                    android:inputType="textMultiLine"
+                    android:textSize="18sp" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/imageView_goto_conjugator"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:elevation="2dp"
+                app:srcCompat="@drawable/ic_curved_arrow_right"
+                app:layout_constraintBottom_toBottomOf="@+id/textOutputLayout"
+                app:layout_constraintEnd_toEndOf="@+id/textOutputLayout"
+                app:layout_constraintHorizontal_bias="0.95"
+                app:layout_constraintStart_toStartOf="@+id/textOutputLayout"
+                app:layout_constraintTop_toTopOf="@+id/textOutputLayout"
+                app:layout_constraintVertical_bias="0.95" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textLayout_third"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="0dp"
+                android:textColorHint="@color/darkergray"
+                android:visibility="gone"
+                app:boxCornerRadiusBottomEnd="4dp"
+                app:boxCornerRadiusBottomStart="4dp"
+                app:boxCornerRadiusTopEnd="4dp"
+                app:boxCornerRadiusTopStart="4dp"
+                app:boxStrokeColor="@color/yellow"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editText_third"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="start"
+                    android:imeOptions="actionSearch"
+                    android:inputType="textMultiLine"
+                    android:textSize="18sp" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/cardView_popup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:visibility="invisible"
+                app:cardCornerRadius="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/recyclerView_recent_searches"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_weight="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textLayout_third"
+                app:layout_constraintVertical_bias="0"
+                app:layout_goneMarginTop="6dp"
+                app:strokeColor="@color/darkGrey"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cons"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:onClick="closePopUp"
+                        app:srcCompat="@drawable/ic_arrow_back"
+                        android:tint="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView_recognized_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/progressBar_recognized_text"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="0dp"
+                        android:onClick="tryAgain"
+                        android:text="@string/speak_translator"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toEndOf="@+id/imageView2"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBar_recognized_text"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="36dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        app:layout_constraintTop_toBottomOf="@+id/textView_recognized_text"
+                        tools:layout_editor_absoluteX="0dp" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/recyclerView_recent_searches"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                app:cardCornerRadius="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/cardView_popup"
+                app:layout_constraintTop_toBottomOf="@id/textLayout_third"
+                app:layout_constraintVertical_bias="0"
+                app:layout_goneMarginTop="6dp"
+                app:strokeColor="@color/darkGrey"
+                app:strokeWidth="1dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="2dp">
+
+                    <TextView
+                        android:id="@+id/textView_recent_translation_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="0dp"
+                        android:gravity="center"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="8dp"
+                        android:text="@string/recently_translated"
+                        android:textColor="@color/darkGrey"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageView_dropdown_recent_translations"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_toEndOf="@id/textView_synonyms_title"
+                        android:onClick="expandView"
+                        android:rotation="180"
+                        android:scaleX="1.2"
+                        android:scaleY="1.2"
+                        app:srcCompat="@drawable/ic_arrow_drop_down" />
+
+                    <net.cachapa.expandablelayout.ExpandableLayout
+                        android:id="@+id/expandable_layout_trans"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textView_recent_translation_title"
+                        android:layout_marginTop="2dp"
+                        app:el_duration="500"
+                        app:el_expanded="true"
+                        app:el_parallax="0.5">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/linearLayout_expandableLayout_translation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" />
+
+                    </net.cachapa.expandablelayout.ExpandableLayout>
+
+                    <View
+                        android:id="@+id/viewSeparator"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/expandable_layout_trans"
+                        android:background="@color/gray"
+                        android:visibility="gone" />
+
+                    <RelativeLayout
+                        android:id="@+id/relativeLayout_show_all_trans"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/viewSeparator"
+                        android:background="?attr/selectableItemBackground"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp">
+
+                        <TextView
+                            android:id="@+id/textView_title_show_all"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingTop="2dp"
+                            android:paddingBottom="4dp"
+                            android:text="@string/view_all_recent_translations"
+                            android:textColor="@color/linkBlue"
+                            android:textSize="18sp" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/textView_title_show_all"
+                            app:srcCompat="@drawable/ic_more"
+                            android:tint="@color/linkBlue" />
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="@string/AD_UNIT_TRANSLATOR"
+        ads:layout_constraintBottom_toTopOf="@+id/navigation_translator"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent" />
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation_translator"
+        style="@style/Widget.MaterialComponents.BottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        app:itemIconTint="@drawable/bottom_nav_item_check"
+        app:labelVisibilityMode="unlabeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/navigation" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
