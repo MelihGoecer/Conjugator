@@ -283,7 +283,7 @@ public class ConjugationActivity extends AppCompatActivity implements Repository
         Menu menu = navigation.getMenu();
         MenuItem menuItem = menu.getItem(2);
         menuItem.setChecked(true);
-
+        int i = 3;
 
         final TextView textView = findViewById(R.id.textView_conjugator_title);
 
