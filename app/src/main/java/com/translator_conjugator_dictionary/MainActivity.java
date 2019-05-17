@@ -266,7 +266,7 @@ public class MainActivity extends AppCompatActivity implements View.OnFocusChang
         setContentView(R.layout.activity_main);
 
         ImageView imageView;
-        imageView.setImageDrawable(getDrawable(R.drawable.common_google_signin_btn_icon_dark_normal));
+
 
         stubImageButton = findViewById(R.id.stub_imageButton_swapLangs);
         stubThirdSpinner = findViewById(R.id.stub_thirdSpinner);
