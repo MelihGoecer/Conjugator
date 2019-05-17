@@ -265,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements View.OnFocusChang
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ImageView imageView;
+        ImageView imageView = new ImageView(this);
 
 
         stubImageButton = findViewById(R.id.stub_imageButton_swapLangs);
