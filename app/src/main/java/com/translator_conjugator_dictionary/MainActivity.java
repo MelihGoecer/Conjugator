@@ -262,6 +262,7 @@ public class MainActivity extends AppCompatActivity implements View.OnFocusChang
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         stubImageButton = findViewById(R.id.stub_imageButton_swapLangs);
         stubThirdSpinner = findViewById(R.id.stub_thirdSpinner);
         stubImageButton.setOnInflateListener(new ViewStub.OnInflateListener() {
