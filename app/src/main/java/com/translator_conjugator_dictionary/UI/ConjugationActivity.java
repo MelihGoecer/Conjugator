@@ -5,20 +5,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -29,21 +22,15 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.view.menu.MenuBuilder;
-import androidx.appcompat.view.menu.MenuPopupHelper;
-import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.github.ybq.android.spinkit.sprite.Sprite;
@@ -75,8 +62,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import static android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
 
 public class ConjugationActivity extends AppCompatActivity implements Repository.IConjugation,
         RecentlySearchedItemsFragment.OnRecentSearchItemClickListener {
@@ -260,6 +245,7 @@ public class ConjugationActivity extends AppCompatActivity implements Repository
             }
         });
 
+
         allLangsLong = getResources().getStringArray(R.array.allLanguagesLong);
         allLangsShort = getResources().getStringArray(R.array.allLanguagesShort);
         currentLanguage = allLangsLong[1];
@@ -283,7 +269,6 @@ public class ConjugationActivity extends AppCompatActivity implements Repository
         Menu menu = navigation.getMenu();
         MenuItem menuItem = menu.getItem(2);
         menuItem.setChecked(true);
-        int i = 3;
 
         final TextView textView = findViewById(R.id.textView_conjugator_title);
 
@@ -486,7 +471,10 @@ public class ConjugationActivity extends AppCompatActivity implements Repository
         final RelativeLayout relativeLayoutToolbar = findViewById(R.id.relativeLayout_toolbar);
         final RelativeLayout relativeLayoutRecentTitle = findViewById(R.id.relativeLayout_recent_title);
         if (conjugation) {
-            findViewById(R.id.relativeLayout_toolbar_bg).setVisibility(View.VISIBLE);
+            RelativeLayout relativeLayoutBg =
+                    findViewById(R.id.relativeLayout_toolbar_bg);
+            relativeLayoutBg.setVisibility(View.VISIBLE);
+            relativeLayoutBg.setBackground(new DottedLayout());
             relativeLayoutToolbar.setVisibility(View.INVISIBLE);
             relativeLayoutRecentTitle.setVisibility(View.INVISIBLE);
             final ImageView imageViewSearch = findViewById(R.id.menu_conjugator_search_conjugation);
@@ -502,8 +490,12 @@ public class ConjugationActivity extends AppCompatActivity implements Repository
 
 
             final ImageView imageViewAddFavorite = findViewById(R.id.imageView_add_to_favorite);
-            if (((boolean) imageViewAddFavorite.getTag())) {
-                imageViewAddFavorite.setImageResource(R.drawable.ic_star_outline);
+            try {
+                if (((boolean) imageViewAddFavorite.getTag())) {
+                    imageViewAddFavorite.setImageResource(R.drawable.ic_star_outline);
+                }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             }
             imageViewAddFavorite.setTag(false);
             imageViewAddFavorite.setOnClickListener(new View.OnClickListener() {

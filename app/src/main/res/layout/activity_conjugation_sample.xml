@@ -49,8 +49,7 @@
                         android:visibility="gone"
                         android:id="@+id/relativeLayout_toolbar_bg"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/white">
+                        android:layout_height="match_parent">
 
                         <ImageView
                             android:id="@+id/menu_conjugator_settings_conjugation"
@@ -85,6 +84,7 @@
 
 
                     <RelativeLayout
+                        android:visibility="visible"
                         android:id="@+id/relativeLayout_toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
