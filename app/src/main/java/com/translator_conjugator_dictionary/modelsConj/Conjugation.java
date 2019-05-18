@@ -5,16 +5,17 @@ import android.os.Parcelable;
 
 import java.util.List;
 
-import androidx.lifecycle.LiveData;
-
-public class Conjugation extends LiveData<Conjugation> implements Parcelable {
+public class Conjugation implements Parcelable {
     private List<ResultBlock> resultBlocks;
+    private String id;
 
-    public Conjugation(List<ResultBlock> resultBlocks) {
+    public Conjugation(List<ResultBlock> resultBlocks, String id) {
         this.resultBlocks = resultBlocks;
+        this.id = id;
     }
 
     protected Conjugation(Parcel in) {
+        id = in.readString();
     }
 
     public static final Creator<Conjugation> CREATOR = new Creator<Conjugation>() {
@@ -33,12 +34,17 @@ public class Conjugation extends LiveData<Conjugation> implements Parcelable {
         return resultBlocks;
     }
 
+    public String getId() {
+        return id;
+    }
+
     @Override
     public int describeContents() {
         return 0;
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
     }
 }

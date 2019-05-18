@@ -7,192 +7,232 @@
     android:layout_height="match_parent"
     tools:context=".UI.ConjugationActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/navigation_conjugation"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_conjugator"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_marginTop="0dp"
-            android:background="@color/Blue"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_scrollFlags="scroll|enterAlways">
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:elevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_conjugator"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="?attr/actionBarSize"
+                android:contentInsetStart="0dp"
+                android:contentInsetLeft="0dp"
+                android:contentInsetEnd="0dp"
+                android:contentInsetRight="0dp"
+                app:contentInsetEnd="0dp"
+                app:contentInsetLeft="0dp"
+                app:contentInsetRight="0dp"
+                app:contentInsetStart="0dp"
+                app:layout_scrollFlags="scroll|snap">
 
-                <TextView
-                    android:id="@+id/textView_conjugator_title"
-                    android:layout_width="wrap_content"
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <RelativeLayout
+                        android:id="@+id/relativeLayout_toolbar_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/menu_conjugator_settings_conjugation"
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="8dp"
+                            android:tint="@color/black"
+                            app:srcCompat="@drawable/ic_more_vert" />
+
+                        <ImageView
+                            android:id="@+id/imageView_add_to_favorite"
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="6dp"
+                            android:layout_toStartOf="@id/menu_conjugator_settings_conjugation"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:src="@drawable/ic_star_outline" />
+
+                        <ImageView
+                            android:id="@+id/menu_conjugator_search_conjugation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="12dp"
+                            android:layout_toStartOf="@id/imageView_add_to_favorite"
+                            android:tint="@color/black"
+                            app:srcCompat="@drawable/ic_search" />
+
+
+                        <TextView
+                            android:id="@+id/textView_searched_verb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="6dp"
+                            android:text="Hello world"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/textView_language_of_verb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/textView_searched_verb"
+                            android:layout_marginStart="8dp"
+                            android:text="german" />
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/relativeLayout_toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/Blue"
+                        android:visibility="visible">
+
+                        <TextView
+                            android:id="@+id/textView_conjugator_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="12dp"
+                            android:fontFamily="@font/cherry_swash"
+                            android:text="@string/title_conjugation"
+                            android:textColor="@color/white"
+                            android:textSize="20sp" />
+
+                        <ImageView
+                            android:id="@+id/menu_conjugator_settings"
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="8dp"
+                            app:srcCompat="@drawable/ic_more_vert" />
+
+                        <ImageView
+                            android:id="@+id/menu_conjugator_favorite"
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="8dp"
+                            android:layout_toStartOf="@id/menu_conjugator_settings"
+                            app:srcCompat="@drawable/ic_star_filled" />
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/menu_conjugator_language"
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="16dp"
+                            android:layout_toStartOf="@id/menu_conjugator_favorite"
+                            android:src="@drawable/flag_of_germany"
+                            app:civ_border_color="@color/white" />
+
+                        <androidx.appcompat.widget.SearchView
+                            android:id="@+id/menu_conjugator_search"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="4dp"
+                            android:layout_toStartOf="@id/menu_conjugator_language"
+                            app:closeIcon="@drawable/ic_clear_black_24dp"
+                            app:queryHint="Search..."
+                            app:searchHintIcon="@null"
+                            app:searchIcon="@drawable/ic_search" />
+
+                    </RelativeLayout>
+
+                </FrameLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout_conjugation_overview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textView_conjugation_overview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="8dp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout_recent_title"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:fontFamily="@font/cherry_swash"
-                    android:text="@string/title_conjugation"
-                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Title"
-                    android:textColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageButton_clear"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:background="@color/grey_bg">
 
-                <ImageView
-                    android:id="@+id/imageButton_clear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="0dp"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_arrow_back" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="16dp"
+                        android:fontFamily="sans-serif-black"
+                        android:text="Verlauf"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <ImageView
+                        android:id="@+id/imageView_arrow_up_conjugator"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_arrow_up" />
 
-        </androidx.appcompat.widget.Toolbar>
+
+                </RelativeLayout>
+
+
+            </FrameLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/relLayout1"
+            android:id="@+id/conjugator_view_container"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginEnd="6dp"
-            android:orientation="horizontal"
-            android:paddingStart="2dp"
-            android:paddingEnd="2dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appBarLayout">
-
-            <AutoCompleteTextView
-                android:id="@+id/input_search_conjugation"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="0dp"
-                android:completionThreshold="1"
-                android:dropDownWidth="200dp"
-                android:hint="@string/search_conjugation"
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:maxLength="18"
-                android:popupBackground="@color/spinnerItemGrey2"
-                android:textColor="#000"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/relLayout2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_weight="0.55"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <RelativeLayout
-                android:id="@+id/relLayout2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="2dp"
-                app:layout_constraintEnd_toStartOf="@id/separator_bar"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_weight="0.13"
-                app:layout_constraintStart_toEndOf="@id/input_search_conjugation">
-
-                <ImageView
-                    android:id="@+id/imageView_editText_dictionary_clear"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    android:onClick="clearEditText"
-                    android:scaleType="center"
-                    android:tint="@color/Grey"
-                    android:visibility="gone"
-                    app:srcCompat="@drawable/ic_close" />
-
-                <ImageView
-                    android:id="@+id/imageView_search"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="center"
-                    android:tint="@color/black"
-                    android:visibility="visible"
-                    app:srcCompat="@drawable/ic_search" />
-
-            </RelativeLayout>
-
-            <View
-                android:id="@+id/separator_bar"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"
-                android:background="@color/darkGrey"
-                app:layout_constraintEnd_toStartOf="@id/spinner_language_conjugation"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_weight="0.005"
-                app:layout_constraintStart_toEndOf="@+id/relLayout2" />
-
-            <com.jaredrummler.materialspinner.MaterialSpinner
-                android:id="@+id/spinner_language_conjugation"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="2dp"
-                android:backgroundTint="@android:color/transparent"
-                android:drawableEnd="@drawable/ic_spinner_triangle"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_weight="0.45"
-                app:layout_constraintStart_toEndOf="@id/separator_bar"
-                app:ms_background_selector="@drawable/dropdown_item_selector"
-                app:ms_dropdown_height="250dp"
-                app:ms_hide_arrow="true" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_result_block"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="0dp"
-        android:background="@color/grey_bg"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        app:layout_constraintBottom_toTopOf="@id/navigation_conjugation"
-        app:layout_constraintTop_toBottomOf="@id/relativeLayout_voice_menu" />
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout_voice_menu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/appBarLayout">
-
-        <ImageView
-            android:id="@+id/imageView_back_voice"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="8dp"
-            android:tint="@color/black"
-            app:srcCompat="@drawable/ic_arrow_back" />
-
-        <TextView
-            android:id="@+id/textView_voice_announce"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/tippe_auf_ein_feld"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:layout_marginBottom="0dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintBottom_toTopOf="@+id/navigation_conjugation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
-    </RelativeLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <ProgressBar
         android:id="@+id/progressBar_conjugation"

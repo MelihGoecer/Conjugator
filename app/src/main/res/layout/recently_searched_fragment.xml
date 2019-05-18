@@ -7,6 +7,6 @@
     android:paddingStart="8dp"
     android:paddingEnd="8dp"
     app:layout_constraintBottom_toTopOf="@id/navigation_conjugation"
-    app:layout_constraintTop_toBottomOf="@id/relativeLayout_voice_menu"
+    app:layout_constraintTop_toBottomOf="@id/appBarLayout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android" />

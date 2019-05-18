@@ -6,6 +6,8 @@ import android.net.NetworkInfo;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -40,8 +42,6 @@ import com.translator_conjugator_dictionary.utils.MySingleton;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -101,7 +101,9 @@ public class Repository {
                         List<DocumentSnapshot> documentSnapshots = document.getDocuments();
                         for (DocumentSnapshot documentSnapshot : documentSnapshots) {
                             ConjugationFull conjugationFull = documentSnapshot.toObject(ConjugationFull.class);
-                            Conjugation conjugation = new Conjugation(conjugationFull.getResultBlocks());
+                            Conjugation conjugation =
+                                    new Conjugation(conjugationFull.getResultBlocks(),
+                                            documentSnapshot.getId());
                             ConjugationActivity.tenseBlocksInRV = true;
                             List<String> wordTypes = new ArrayList<>();
                             for (ResultBlock resultBlock : conjugation.getResultBlocks()) {
@@ -146,21 +148,17 @@ public class Repository {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        List<ResultBlock> resultBlockList = new ArrayList<>(ConjugationDbHelper.filterResult(response));
+                        final List<ResultBlock> resultBlockList = new ArrayList<>(ConjugationDbHelper.filterResult(response));
                         if (resultBlockList.size() == 0) {
                             Toast.makeText(context, context.getString(R.string.no_results_found),
                                     Toast.LENGTH_SHORT).show();
                             publishResults.getResults(null, null);
                         } else {
                             ConjugationActivity.tenseBlocksInRV = true;
-                            List<String> wordTypes = new ArrayList<>();
+                            final List<String> wordTypes = new ArrayList<>();
                             for (ResultBlock resultBlock : resultBlockList) {
                                 wordTypes.add(resultBlock.getHeader());
                             }
-                            publishResults.getResults(new Conjugation(resultBlockList), wordTypes
-                            );
-                            RecentSearch recentSearch = new RecentSearch(searchTerm, language.toLowerCase());
-                            new DatabaseHelper(context).addDataConj(recentSearch, "recent_conjugations");
 
                             List<ResultBlockAlternative> alternatives = new ArrayList<>();
                             for (ResultBlock resultBlock : resultBlockList) {
@@ -180,6 +178,10 @@ public class Repository {
                                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                         @Override
                                         public void onSuccess(DocumentReference documentReference) {
+                                            publishResults.getResults(new Conjugation(resultBlockList, documentReference.getId()), wordTypes
+                                            );
+                                            RecentSearch recentSearch = new RecentSearch(searchTerm, language.toLowerCase());
+                                            new DatabaseHelper(context).addDataConj(recentSearch, "recent_conjugations");
                                         }
                                     });
                         }

@@ -1,6 +1,8 @@
 package com.translator_conjugator_dictionary.UI;
 
 import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -52,6 +55,8 @@ import com.translator_conjugator_dictionary.modelsConj.LanguageItem;
 import com.translator_conjugator_dictionary.utils.ConjugatorHelper;
 import com.translator_conjugator_dictionary.utils.Constants;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -78,6 +83,11 @@ public class ConjugationActivity extends AppCompatActivity implements Repository
     private RecentlySearchedItemsFragment rsif;
     private SearchView searchView;
     private SearchView.SearchAutoComplete searchAutoComplete;
+    private RelativeLayout relativeLayoutToolbar;
+    private RelativeLayout relativeLayoutRecentTitle;
+    private RelativeLayout relativeLayoutBg;
+    private ImageView imageViewSearch;
+    private ImageView imageViewAddFavorite;
     //vars
     private GoogleDetectLanguage googleDetectLanguage;
     private static String[] allLangsLong;
@@ -156,8 +166,19 @@ public class ConjugationActivity extends AppCompatActivity implements Repository
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_conjugation_sample);
+        setContentView(R.layout.activity_conjugation);
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
+        imageViewAddFavorite = findViewById(R.id.imageView_add_to_favorite);
+
+        imageViewSearch = findViewById(R.id.menu_conjugator_search_conjugation);
+
+        relativeLayoutBg =
+                findViewById(R.id.relativeLayout_toolbar_bg);
+        relativeLayoutToolbar = findViewById(R.id.relativeLayout_toolbar);
+
+        relativeLayoutRecentTitle =
+                findViewById(R.id.relativeLayout_recent_title);
 
         mInterstitialAd = new InterstitialAd(ConjugationActivity.this);
         mInterstitialAd.setAdUnitId(getString(R.string.AD_UNIT_CONJUGATION));
@@ -183,9 +204,52 @@ public class ConjugationActivity extends AppCompatActivity implements Repository
         imageViewSettingsConjugation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(ConjugationActivity.this, v);
+                popup.inflate(R.menu.conjugator_verb);
 
+                try {
+                    Field[] fields = popup.getClass().getDeclaredFields();
+                    for (Field field : fields) {
+                        if ("mPopup".equals(field.getName())) {
+                            field.setAccessible(true);
+                            Object menuPopupHelper = field.get(popup);
+                            Class<?> classPopupHelper = Class.forName(menuPopupHelper
+                                    .getClass().getName());
+                            Method setForceIcons = classPopupHelper.getMethod(
+                                    "setForceShowIcon", boolean.class);
+                            setForceIcons.invoke(menuPopupHelper, true);
+                            break;
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                ObjectAnimator objectAnimator1 = ObjectAnimator.ofFloat(imageViewSearch, "alpha",
+                        0.1f);
+                ObjectAnimator objectAnimator2 = ObjectAnimator.ofFloat(imageViewAddFavorite,
+                        "alpha", 0.1f);
+                AnimatorSet animatorSet = new AnimatorSet();
+                animatorSet.playTogether(objectAnimator1, objectAnimator2);
+                animatorSet.start();
+
+                popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                    @Override
+                    public void onDismiss(PopupMenu menu) {
+                        ObjectAnimator objectAnimator1 = ObjectAnimator.ofFloat(imageViewSearch, "alpha",
+                                1f);
+                        ObjectAnimator objectAnimator2 = ObjectAnimator.ofFloat(imageViewAddFavorite,
+                                "alpha", 1f);
+                        AnimatorSet animatorSet = new AnimatorSet();
+                        animatorSet.playTogether(objectAnimator1, objectAnimator2);
+                        animatorSet.start();
+                    }
+                });
+
+                popup.show();
             }
         });
+
 
         appBarLayout = findViewById(R.id.appBarLayout);
 
@@ -342,6 +406,7 @@ public class ConjugationActivity extends AppCompatActivity implements Repository
         civLanguage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                closeKeyboard();
                 PopupWindow popupWindow = createPopupForCIV();
                 popupWindow.setFocusable(true);
                 popupWindow.showAsDropDown(v, popupWindow.getWidth() * -1 / 2, 0);
@@ -372,6 +437,28 @@ public class ConjugationActivity extends AppCompatActivity implements Repository
 
         Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius);
         view.setVisibility(View.VISIBLE);
+
+        anim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                relativeLayoutBg.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
 
         anim.start();
 
@@ -468,16 +555,15 @@ public class ConjugationActivity extends AppCompatActivity implements Repository
     }
 
     private void fitDesign(boolean conjugation) {
-        final RelativeLayout relativeLayoutToolbar = findViewById(R.id.relativeLayout_toolbar);
-        final RelativeLayout relativeLayoutRecentTitle = findViewById(R.id.relativeLayout_recent_title);
         if (conjugation) {
-            RelativeLayout relativeLayoutBg =
-                    findViewById(R.id.relativeLayout_toolbar_bg);
+            TextView tvVerb = findViewById(R.id.textView_searched_verb);
+            tvVerb.setText(queriedVerb);
+            TextView tvLang = findViewById(R.id.textView_language_of_verb);
+            tvLang.setText(currentLanguage);
             relativeLayoutBg.setVisibility(View.VISIBLE);
             relativeLayoutBg.setBackground(new DottedLayout());
             relativeLayoutToolbar.setVisibility(View.INVISIBLE);
             relativeLayoutRecentTitle.setVisibility(View.INVISIBLE);
-            final ImageView imageViewSearch = findViewById(R.id.menu_conjugator_search_conjugation);
             imageViewSearch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -489,7 +575,7 @@ public class ConjugationActivity extends AppCompatActivity implements Repository
             });
 
 
-            final ImageView imageViewAddFavorite = findViewById(R.id.imageView_add_to_favorite);
+
             try {
                 if (((boolean) imageViewAddFavorite.getTag())) {
                     imageViewAddFavorite.setImageResource(R.drawable.ic_star_outline);
@@ -653,6 +739,7 @@ public class ConjugationActivity extends AppCompatActivity implements Repository
             searchAutoComplete.setFocusableInTouchMode(true);
             searchAutoComplete.setOnClickListener(null);
         }
+        appBarLayout.setExpanded(true);
         civLanguage.setImageResource(getFlagResId());
         searchView.setQuery(strings[0].toString(), true);
     }
