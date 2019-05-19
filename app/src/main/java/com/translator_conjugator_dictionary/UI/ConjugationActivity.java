@@ -7,8 +7,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,6 +38,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.FadingCircle;
@@ -162,6 +166,49 @@ public class ConjugationActivity extends AppCompatActivity implements Repository
         return null;
     }
 
+    public void startAnimVectorDraw(boolean b, final ImageView imageView) {
+        if (!b) {
+            imageView.setEnabled(false);
+            imageView.setImageResource(R.drawable.overflow_to_arrow);
+            Drawable d = imageView.getDrawable();
+            if (d instanceof AnimatedVectorDrawableCompat) {
+                AnimatedVectorDrawableCompat avd = (AnimatedVectorDrawableCompat) d;
+                avd.start();
+            } else if (d instanceof AnimatedVectorDrawable) {
+                AnimatedVectorDrawable avd = (AnimatedVectorDrawable) d;
+                avd.start();
+            }
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    imageView.setImageResource(R.drawable.arrow_to_overflow);
+                    imageView.setEnabled(true);
+                }
+            }, 400);
+
+
+        } else {
+            imageView.setEnabled(false);
+            imageView.setImageResource(R.drawable.arrow_to_overflow);
+            Drawable d = imageView.getDrawable();
+            if (d instanceof AnimatedVectorDrawableCompat) {
+                AnimatedVectorDrawableCompat avd = (AnimatedVectorDrawableCompat) d;
+                avd.start();
+            } else if (d instanceof AnimatedVectorDrawable) {
+                AnimatedVectorDrawable avd = (AnimatedVectorDrawable) d;
+                avd.start();
+            }
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    imageView.setImageResource(R.drawable.ic_more_vert);
+                    imageView.setEnabled(true);
+                }
+            }, 400);
+
+        }
+    }
+
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,7 +250,7 @@ public class ConjugationActivity extends AppCompatActivity implements Repository
                 findViewById(R.id.menu_conjugator_settings_conjugation);
         imageViewSettingsConjugation.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 PopupMenu popup = new PopupMenu(ConjugationActivity.this, v);
                 popup.inflate(R.menu.conjugator_verb);
 
@@ -243,8 +290,13 @@ public class ConjugationActivity extends AppCompatActivity implements Repository
                         AnimatorSet animatorSet = new AnimatorSet();
                         animatorSet.playTogether(objectAnimator1, objectAnimator2);
                         animatorSet.start();
+                        startAnimVectorDraw(true, (ImageView) v);
                     }
                 });
+
+
+                startAnimVectorDraw(false, (ImageView) v);
+
 
                 popup.show();
             }

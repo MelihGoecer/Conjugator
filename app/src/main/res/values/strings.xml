@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">Conjugator</string>
     <string name="ADMOB_APP_ID" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
 
@@ -8,15 +8,20 @@
     <string name="AD_UNIT_FAVOURITES" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
     <string name="AD_UNIT_TRANSLATOR" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
 
-<!--
-    <string name="ADMOB_APP_ID" translatable="false">ca-app-pub-4164598305330576~2138695879</string>
 
-    <string name="AD_UNIT_CONJUGATION" translatable="false">ca-app-pub-4164598305330576/6847567817</string>
-    <string name="AD_UNIT_DICTIONARY" translatable="false">ca-app-pub-4164598305330576/5913760091</string>
-    <string name="AD_UNIT_RECENT_TRANS" translatable="false">ca-app-pub-4164598305330576/4909154820</string>
-    <string name="AD_UNIT_FAVOURITES" translatable="false">ca-app-pub-4164598305330576/4623527449</string>
-    <string name="AD_UNIT_TRANSLATOR" translatable="false">ca-app-pub-4164598305330576/3674609562</string>
--->
+    <string name="arrowoverflow_path_arrowhead" translatable="false">M -5.5,-1 l 11,0 c 0,0 0,0 0,0 l 0,2 c 0,0 0,0 0,0 l -11,0 c 0,0 0,0 0,0 l 0,-2 c 0,0 0,0 0,0 Z</string>
+    <string name="arrowoverflow_path_arrowbar" translatable="false">M -7,-1 l 14,0 c 0,0 0,0 0,0 l 0,2 c 0,0 0,0 0,0 l -14,0 c 0,0 0,0 0,0 l 0,-2 c 0,0 0,0 0,0 Z</string>
+    <string name="arrowoverflow_path_dot" translatable="false">M 0,-2 l 0,0 c 1.1045694996,0 2,0.8954305004 2,2 l 0,0 c 0,1.1045694996 -0.8954305004,2 -2,2 l 0,0 c -1.1045694996,0 -2,-0.8954305004 -2,-2 l 0,0 c 0,-1.1045694996 0.8954305004,-2 2,-2 Z</string>
+
+    <!--
+        <string name="ADMOB_APP_ID" translatable="false">ca-app-pub-4164598305330576~2138695879</string>
+
+        <string name="AD_UNIT_CONJUGATION" translatable="false">ca-app-pub-4164598305330576/6847567817</string>
+        <string name="AD_UNIT_DICTIONARY" translatable="false">ca-app-pub-4164598305330576/5913760091</string>
+        <string name="AD_UNIT_RECENT_TRANS" translatable="false">ca-app-pub-4164598305330576/4909154820</string>
+        <string name="AD_UNIT_FAVOURITES" translatable="false">ca-app-pub-4164598305330576/4623527449</string>
+        <string name="AD_UNIT_TRANSLATOR" translatable="false">ca-app-pub-4164598305330576/3674609562</string>
+    -->
 
     //languages
     <string-array name="languages_array">
