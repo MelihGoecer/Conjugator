@@ -20,7 +20,6 @@ import android.view.ViewAnimationUtils;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -56,8 +55,10 @@ import com.translator_conjugator_dictionary.fragments.RecentlySearchedItemsFragm
 import com.translator_conjugator_dictionary.modelsConj.Conjugation;
 import com.translator_conjugator_dictionary.modelsConj.DetectedLanguage;
 import com.translator_conjugator_dictionary.modelsConj.LanguageItem;
+import com.translator_conjugator_dictionary.utils.AutoSuggestAdapter;
 import com.translator_conjugator_dictionary.utils.ConjugatorHelper;
 import com.translator_conjugator_dictionary.utils.Constants;
+import com.translator_conjugator_dictionary.utils.DatabaseHelper;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -73,7 +74,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ConjugationActivity extends AppCompatActivity implements Repository.IConjugation,
-        RecentlySearchedItemsFragment.OnRecentSearchItemClickListener {
+        RecentlySearchedItemsFragment.OnRecentSearchItemClickListener, DatabaseHelper.OnQueryListener {
     private static final String TAG = "ConjugationActivity";
     //widgets
     public AutoCompleteTextView editTextSearch;
@@ -101,6 +102,9 @@ public class ConjugationActivity extends AppCompatActivity implements Repository
     public String currentLanguage;
     public String queriedVerb;
     private boolean inConjugationMode = false;
+    private AutoSuggestAdapter suggestAdapter;
+    private ArrayList<String> dataArr;
+    private DatabaseHelper mDb;
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -416,10 +420,11 @@ public class ConjugationActivity extends AppCompatActivity implements Repository
 
         searchAutoComplete.setBackgroundResource(R.drawable.search_view_bg);
 
+        mDb = new DatabaseHelper(this);
         // Create a new ArrayAdapter and add data to search auto complete object.
-        String dataArr[] = {"Apple", "Amazon", "Amd", "Microsoft", "Microwave", "MicroNews", "Intel", "Intelligence"};
-        ArrayAdapter<String> newsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, dataArr);
-        searchAutoComplete.setAdapter(newsAdapter);
+        dataArr = new ArrayList<>();
+        suggestAdapter = new AutoSuggestAdapter(this);
+        searchAutoComplete.setAdapter(suggestAdapter);
 
         // Listen to search view item on click event.
         searchAutoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -450,7 +455,11 @@ public class ConjugationActivity extends AppCompatActivity implements Repository
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                return false;
+                mDb.queryVerbsTable(newText, ConjugationActivity.this,
+                        ConjugatorHelper.getLangShort(currentLanguage,
+                                getResources().getStringArray(R.array.allLanguagesLong),
+                                getResources().getStringArray(R.array.allLanguagesShort)));
+                return true;
             }
         });
 
@@ -627,7 +636,6 @@ public class ConjugationActivity extends AppCompatActivity implements Repository
             });
 
 
-
             try {
                 if (((boolean) imageViewAddFavorite.getTag())) {
                     imageViewAddFavorite.setImageResource(R.drawable.ic_star_outline);
@@ -796,4 +804,16 @@ public class ConjugationActivity extends AppCompatActivity implements Repository
         searchView.setQuery(strings[0].toString(), true);
     }
 
+    @Override
+    public void onQueryFinished(List<String> results) {
+        Log.d(TAG, "onQueryFinished: " + results.size());
+        dataArr.clear();
+        dataArr.addAll(results);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                suggestAdapter.setData(dataArr);
+            }
+        });
+    }
 }

@@ -5,17 +5,23 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.view.ActionMode;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.annotations.NotNull;
@@ -36,7 +42,6 @@ import com.translator_conjugator_dictionary.modelsSynonyms.Meaning_tr;
 import com.translator_conjugator_dictionary.utils.DatabaseHelper;
 import com.translator_conjugator_dictionary.utils.DictionaryHelper;
 
-import java.nio.BufferUnderflowException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,13 +49,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.view.ActionMode;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -384,7 +382,7 @@ public class OnlineDictionaryFragment extends Fragment implements DictionaryCont
                                             SimpleDateFormat dateFormat = (SimpleDateFormat) DateFormat.getDateTimeInstance();
                                             dateFormat.applyPattern("yyyyMMdHms");
                                             String s = dateFormat.format(new Date());
-                                            mDb.addSavedDItems(s, ((DictionaryActivity) getActivity()).searchView.getQuery().toString(), getDictionaryItemsViaCBPos());
+                                            /* mDb.addSavedDItems(s, ((DictionaryActivity) getActivity()).searchView.getQuery().toString(), getDictionaryItemsViaCBPos());*/
                                             mActionMode.finish();
                                     }
                                 }

@@ -4,10 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import java.util.List;
-
 public class ConjugatorHelper {
-
 
     public static String getLangLong(String languageShort, String[] allLangsLong, String[] allLangsShort) {
         for (int i = 0; i < allLangsLong.length; i++) {
@@ -70,9 +67,6 @@ public class ConjugatorHelper {
                 return "englisch";
         }
     }
-
-    public static final String[] alphabet = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m"
-            , "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
 
     public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager

@@ -5,26 +5,32 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import com.translator_conjugator_dictionary.models.Translation;
-import com.translator_conjugator_dictionary.modelsConj.ConjBlock;
-import com.translator_conjugator_dictionary.modelsConj.IRecentSearch;
-import com.translator_conjugator_dictionary.modelsConj.RecentSearch;
-import com.translator_conjugator_dictionary.modelsConj.SaveTenseBlock;
-import com.translator_conjugator_dictionary.modelsConj.TenseBlock;
-import com.translator_conjugator_dictionary.modelsDictionary.DictionaryContentItem;
-import com.translator_conjugator_dictionary.modelsDictionary.SaveDictionaryContentItem;
-import com.translator_conjugator_dictionary.modelsDictionary.SaveItem;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.translator_conjugator_dictionary.R;
+import com.translator_conjugator_dictionary.models.Translation;
+import com.translator_conjugator_dictionary.modelsConj.IRecentSearch;
+import com.translator_conjugator_dictionary.modelsConj.RecentSearch;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
+    private static final String TAG = "DatabaseHelper";
+    private static final int DB_VERSION = 2;
 
     private static final String DB_NAME = "translationSave.db";
-    private static final int DB_VERSION = 1;
+    //autocompletion for conjugator
+    private static final String TABLE_NAME_AUTOCOMPLETION_CONJUGATOR_DE =
+            "autocompletion_conjugator_de";
     private static final int CONJ_TABLE_MAX = 40;
     //saved translation table
     private static final String TABLE_NAME = "translations";
@@ -44,21 +50,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_NAME_DICTIONARY = "recent_dictionary_searches";
     //saved conjugation items
     private static final String TABLE_NAME_SAVED_CONJUGATIONS = "saved_conjugations";
-    private static final String COL_SAVED_CONJ_TIMESTAMP = "time";
-    private static final String COL_SAVED_VERB = "verbs";
-    private static final String COL_SAVED_HEADER = "headers";
-    private static final String COL_SAVED_PRONOUN = "pronouns";
-    private static final String COL_SAVED_CONJUGATION = "conjugations";
-    private static final String COL_SAVED_CONJUGATION_LANGUAGE = "language";
     //saved dictionary items
     private static final String TABLE_NAME_SAVED_DICTIONARY_ITEMS = "saved_dictionary_items";
-    private static final String COL_SAVED_D_TIMESTAMP = "timestamp";
-    private static final String COL_SAVED_D_WORD = "words";
-    private static final String COL_SAVED_D_DEFINITION = "definitions";
-    private static final String COL_SAVED_D_EXAMPLE = "examples";
-    private static final String COL_SAVED_D_SYNONYM = "synonyms";
+    private static final String TABLE_NAME_AUTOCOMPLETION_CONJUGATOR_EN =
+            "autocompletion_conjugator_en";
+    private static final String SQL_CREATE_AUTOCOMPLETION_TABLE_DE =
+            "CREATE TABLE " + TABLE_NAME_AUTOCOMPLETION_CONJUGATOR_DE + "("
+                    + "verb" + " TEXT NOT NULL, "
+                    + "length" + " INTEGER NOT NULL, "
+                    + "first_character" + " TEXT NOT NULL);";
 
-    private static final String SQL_DROP = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
     private static final String SQL_CREATE =
             "CREATE TABLE " + TABLE_NAME +
@@ -79,32 +80,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_DICTIONARY_TABLE = "CREATE TABLE " + TABLE_NAME_DICTIONARY + "(" + COL_SEARCH_TERM + " TEXT NOT NULL, "
             + COL_SOURCE_LANGUAGE + " TEXT NOT NULL, "
             + COL_TIMESTAMP_CONJ + " DATETIME DEFAULT CURRENT_TIMESTAMP);";
-
-    private static final String SQL_CREATE_SAVED_CONJ_TABLE = "CREATE TABLE " + TABLE_NAME_SAVED_CONJUGATIONS
-            + "(" + COL_SAVED_CONJ_TIMESTAMP + " TEXT NOT NULL," +
-            COL_SAVED_VERB + " TEXT NOT NULL, " +
-            COL_SAVED_HEADER + " TEXT NOT NULL, " +
-            COL_SAVED_PRONOUN + " TEXT NOT NULL, " +
-            COL_SAVED_CONJUGATION + " TEXT NOT NULL, " +
-            COL_SAVED_CONJUGATION_LANGUAGE + " TEXT NOT NULL);";
-
-    private static final String SQL_CREATE_SAVED_D_TABLE = "CREATE TABLE " + TABLE_NAME_SAVED_DICTIONARY_ITEMS
-            + "(" + COL_SAVED_D_TIMESTAMP + " TEXT NOT NULL, " +
-            COL_SAVED_D_WORD + " TEXT NOT NULL, " +
-            COL_SAVED_D_DEFINITION + " TEXT, " +
-            COL_SAVED_D_EXAMPLE + " TEXT, " +
-            COL_SAVED_D_SYNONYM + " TEXT);";
-
-    public void deleteTable() {
-    this.getWritableDatabase().execSQL(" DROP TABLE IF EXISTS saved_conjugations");
-    }
-    public void addTable() {
-        this.getWritableDatabase().execSQL(SQL_CREATE_SAVED_CONJ_TABLE);
-    }
+    private static final String SQL_CREATE_AUTOCOMPLETION_TABLE_EN =
+            "CREATE TABLE " + TABLE_NAME_AUTOCOMPLETION_CONJUGATOR_EN + "("
+                    + "verb" + " TEXT NOT NULL, "
+                    + "length" + " INTEGER NOT NULL, "
+                    + "first_character" + " TEXT NOT NULL);";
+    private Context context;
+    private String[] verbsList;
 
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
+        this.context = context;
     }
 
     @Override
@@ -112,72 +99,52 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQL_CREATE);
         sqLiteDatabase.execSQL(SQL_CREATE_CONJUGATION_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_DICTIONARY_TABLE);
-        sqLiteDatabase.execSQL(SQL_CREATE_SAVED_CONJ_TABLE);
-        sqLiteDatabase.execSQL(SQL_CREATE_SAVED_D_TABLE);
-
+        sqLiteDatabase.execSQL(SQL_CREATE_AUTOCOMPLETION_TABLE_DE);
+        sqLiteDatabase.execSQL(SQL_CREATE_AUTOCOMPLETION_TABLE_EN);
+        readFileAndAddToTable();
     }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL(SQL_DROP);
-        onCreate(sqLiteDatabase);
+    private void readFileAndAddToTable() {
+        ReadFile readFile = new ReadFile();
+        readFile.start();
     }
 
-    public boolean addSavedItemsConj(String time, String verb, TenseBlock t, String language) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        long result = -1;
-            for (ConjBlock c : t.getConjBlocks()) {
-                contentValues.put(COL_SAVED_CONJ_TIMESTAMP, time);
-                contentValues.put(COL_SAVED_VERB, verb);
-                contentValues.put(COL_SAVED_HEADER, t.getHeader());
-                contentValues.put(COL_SAVED_PRONOUN, c.getPerson());
-                contentValues.put(COL_SAVED_CONJUGATION, c.getResult());
-                contentValues.put(COL_SAVED_CONJUGATION_LANGUAGE, language);
-                result = db.insert(TABLE_NAME_SAVED_CONJUGATIONS, null, contentValues);
-        }
+    private void addVerbsToTable() {
+        WriteToTable writeToTable1 = new WriteToTable(0, 1584, R.raw.verbs_list_de, TABLE_NAME_AUTOCOMPLETION_CONJUGATOR_DE);
+        WriteToTable writeToTable2 = new WriteToTable(1585, 3169, R.raw.verbs_list_de, TABLE_NAME_AUTOCOMPLETION_CONJUGATOR_DE);
+        WriteToTable writeToTable3 = new WriteToTable(3170, 4754, R.raw.verbs_list_de, TABLE_NAME_AUTOCOMPLETION_CONJUGATOR_DE);
+        WriteToTable writeToTable4 = new WriteToTable(4755, 6339, R.raw.verbs_list_de, TABLE_NAME_AUTOCOMPLETION_CONJUGATOR_DE);
+        WriteToTable writeToTable5 = new WriteToTable(6340, 7923, R.raw.verbs_list_de, TABLE_NAME_AUTOCOMPLETION_CONJUGATOR_DE);
 
+        WriteToTable writeToTable6 = new WriteToTable(0, 2710, R.raw.verbs_list_en,
+                TABLE_NAME_AUTOCOMPLETION_CONJUGATOR_EN);
 
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        writeToTable1.start();
+        writeToTable2.start();
+        writeToTable3.start();
+        writeToTable4.start();
+        writeToTable5.start();
 
+        writeToTable6.start();
     }
 
-    public boolean addSavedDItems(String time, String word, List<DictionaryContentItem> dictionaryContentItems) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        long result = -1;
-        for (DictionaryContentItem dc : dictionaryContentItems) {
-            if (dc.getSynonyms() != null){
-                for (String s : dc.getSynonyms()) {
-                    contentValues.put(COL_SAVED_D_TIMESTAMP, time);
-                    contentValues.put(COL_SAVED_D_WORD, word);
-                    contentValues.put(COL_SAVED_D_DEFINITION, dc.getDefinition());
-                    contentValues.put(COL_SAVED_D_EXAMPLE, dc.getExample());
-                    contentValues.put(COL_SAVED_D_SYNONYM, s);
-                    result = db.insert(TABLE_NAME_SAVED_DICTIONARY_ITEMS, null, contentValues);
-                }
-            } else {
-                contentValues.put(COL_SAVED_D_TIMESTAMP, time);
-                contentValues.put(COL_SAVED_D_WORD, word);
-                contentValues.put(COL_SAVED_D_DEFINITION, dc.getDefinition());
-                contentValues.put(COL_SAVED_D_EXAMPLE, dc.getExample());
-                contentValues.put(COL_SAVED_D_SYNONYM, "");
-                result = db.insert(TABLE_NAME_SAVED_DICTIONARY_ITEMS, null, contentValues);
-            }
-
+    public void queryVerbsTable(String query, OnQueryListener onQueryListener, String lang) {
+        QueryTableForAutoCompletion autoCompletion;
+        switch (lang) {
+            case "de":
+                autoCompletion = new QueryTableForAutoCompletion(TABLE_NAME_AUTOCOMPLETION_CONJUGATOR_DE,
+                        query,
+                        onQueryListener);
+                autoCompletion.start();
+                break;
+            case "en":
+                autoCompletion = new QueryTableForAutoCompletion(TABLE_NAME_AUTOCOMPLETION_CONJUGATOR_EN,
+                        query,
+                        onQueryListener);
+                autoCompletion.start();
+                break;
         }
 
-
-
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
     }
 
     public boolean addDataTranslation(String tableName, String header, String result1, String thirdResult
@@ -202,63 +169,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } else {
             return true;
         }
-    }
-
-    public List<SaveItem> getAllSavedItems() {
-        List<SaveItem> saveItems = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor1 = db.rawQuery(" SELECT DISTINCT time,verbs,headers FROM saved_conjugations ORDER BY verbs DESC", null);
-        cursor1.moveToFirst();
-        while (!cursor1.isAfterLast()) {
-            String time = cursor1.getString(0);
-            String foundVerb = cursor1.getString(1);
-            String header = cursor1.getString(2);
-            Cursor cursor2 = db.rawQuery(" SELECT time,verbs,headers,pronouns,conjugations," +
-                    "language" +
-                    " FROM saved_conjugations WHERE time = ?" +
-                    " AND verbs = ?" +
-                    " AND headers = ? ORDER BY verbs DESC", new String[] {time,foundVerb,header});
-            cursor2.moveToFirst();
-            String v = cursor2.getString(1);
-            String h = cursor2.getString(2);
-            String l = cursor2.getString(5);
-
-            List<ConjBlock> conjBlocks = new ArrayList<>();
-            while (!cursor2.isAfterLast()) {
-                conjBlocks.add(new ConjBlock(cursor2.getString(3), cursor2.getString(4)));
-                cursor2.moveToNext();
-            }
-            saveItems.add(new SaveTenseBlock(v, h, conjBlocks, l));
-            cursor2.close();
-            cursor1.moveToNext();
-        }
-        cursor1.close();
-
-        Cursor cursor4 = db.rawQuery(" SELECT DISTINCT timestamp,words,definitions FROM saved_dictionary_items ORDER BY words DESC", null);
-        cursor4.moveToFirst();
-        while (!cursor4.isAfterLast()) {
-            String time = cursor4.getString(0);
-            String word = cursor4.getString(1);
-            String definition = cursor4.getString(2);
-            Cursor cursor5 = db.rawQuery(" SELECT timestamp,words,definitions,examples,synonyms FROM saved_dictionary_items " +
-                    "WHERE timestamp = ? AND words = ? AND definitions = ? ORDER BY words DESC", new String[] {time, word, definition});
-            cursor5.moveToFirst();
-            String w = cursor5.getString(1);
-            String d = cursor5.getString(2);
-            String e = cursor5.getString(3);
-
-            List<String> s = new ArrayList<>();
-            while (!cursor5.isAfterLast()) {
-                s.add(cursor5.getString(4));
-                cursor5.moveToNext();
-            }
-            saveItems.add(new SaveDictionaryContentItem(w, d, e, s));
-            cursor5.close();
-            cursor4.moveToNext();
-        }
-        return saveItems;
-
     }
 
     public List<Translation> getFirstTenRecentTranslations() {
@@ -360,13 +270,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.delete(tableName, "timestamp = ?", new String[]{t});
     }
 
-    public Integer deleteDataConj(int p, String tableName) {
-        SQLiteDatabase database = this.getWritableDatabase();
-        Cursor cursor = database.rawQuery("SELECT timestamp FROM " + tableName + " ORDER BY timestamp ASC ", null);
-        cursor.moveToPosition(p);
-        return database.delete(tableName, "timestamp = ?", new String[]{cursor.getString(0)});
-    }
-
     public List<Translation> filterTranslations(String s) {
         List<Translation> filteredList = new ArrayList<>();
 
@@ -396,8 +299,176 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    @Override
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        switch (i) {
+            case 1:
+                sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_SAVED_CONJUGATIONS);
+                sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_SAVED_DICTIONARY_ITEMS);
+                sqLiteDatabase.execSQL(SQL_CREATE_AUTOCOMPLETION_TABLE_DE);
+                sqLiteDatabase.execSQL(SQL_CREATE_AUTOCOMPLETION_TABLE_EN);
+                readFileAndAddToTable();
+                Log.d(TAG, "onUpgrade: old version: " + i + " new version: " + i1);
+            case 2:
+        }
+
+
+    }
+
     public void clearTable(String name) {
         this.getWritableDatabase().execSQL("DELETE FROM " + name);
+
+
+    }
+
+    public interface OnQueryListener {
+        void onQueryFinished(List<String> results);
+    }
+
+    public class ReadFile extends Thread {
+
+        @Override
+        public void run() {
+            InputStreamReader isr;
+
+            InputStream ips = context.getResources().openRawResource(R.raw.verbs_list_de);
+            try {
+                isr = new InputStreamReader(ips, StandardCharsets.UTF_8.name());
+
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+                isr = null;
+            }
+            StringBuilder list = new StringBuilder();
+
+            int d = 0;
+            try {
+                d = isr.read();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            while (d != -1) {
+                list.append(((char) d));
+                try {
+                    d = isr.read();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            verbsList = list.toString().split(",");
+
+            addVerbsToTable();
+
+        }
+    }
+
+    public class WriteToTable extends Thread {
+        private int startIndex;
+        private int endIndex;
+        private int rawResId;
+        private String language;
+
+        WriteToTable(int startIndex, int endIndex, int rawResId, String language) {
+            this.startIndex = startIndex;
+            this.endIndex = endIndex;
+            this.rawResId = rawResId;
+            this.language = language;
+        }
+
+        @Override
+        public void run() {
+            ContentValues contentValues = new ContentValues();
+            SQLiteDatabase db = DatabaseHelper.this.getWritableDatabase();
+            InputStreamReader isr;
+
+            InputStream ips = context.getResources().openRawResource(rawResId);
+            try {
+                isr = new InputStreamReader(ips, StandardCharsets.UTF_8.name());
+
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+                isr = null;
+            }
+            StringBuilder list = new StringBuilder();
+
+            int d = 0;
+            try {
+                d = isr.read();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            while (d != -1) {
+                list.append(((char) d));
+                try {
+                    d = isr.read();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            verbsList = list.toString().split(",");
+
+
+            ArrayList<String> subList = new ArrayList<>(Arrays.asList(verbsList).subList(startIndex,
+                    endIndex));
+
+
+            Log.d(TAG, "run: " + verbsList.length);
+
+            for (String verb : subList) {
+                Log.d(TAG, "run: " + verb);
+                contentValues.put("verb", verb);
+                contentValues.put("length", verb.length());
+                contentValues.put("first_character", String.valueOf(verb.charAt(0)));
+                db.insert(language, null, contentValues);
+                contentValues.clear();
+            }
+
+        }
+    }
+
+    class QueryTableForAutoCompletion extends Thread {
+        private String table;
+        private String query;
+        private OnQueryListener onQueryListener;
+
+        public QueryTableForAutoCompletion(String language, String query, OnQueryListener onQueryListener) {
+            this.table = language;
+            this.query = query;
+            this.onQueryListener = onQueryListener;
+        }
+
+        @Override
+        public void run() {
+            SQLiteDatabase db = DatabaseHelper.this.getReadableDatabase();
+
+            int length = query.length();
+
+            if (length != 0) {
+                String firstCharacter = String.valueOf(query.charAt(0));
+
+                Cursor cursor =
+                        db.rawQuery("SELECT verb, length, first_character FROM "
+                                        + table +
+                                        " WHERE first_character = ? AND length >= ? AND verb LIKE" +
+                                        " '%" + query + "%' ORDER BY verb DESC, length ASC",
+                                new String[]{firstCharacter, String.valueOf(length)});
+
+                cursor.moveToFirst();
+                int totalNumber = cursor.getCount();
+                List<String> suggestions = new ArrayList<>();
+
+                while (!cursor.isAfterLast()) {
+                    suggestions.add(cursor.getString(0));
+                    cursor.moveToNext();
+                }
+                cursor.close();
+                onQueryListener.onQueryFinished(suggestions);
+            }
+
+
+        }
     }
 
 }

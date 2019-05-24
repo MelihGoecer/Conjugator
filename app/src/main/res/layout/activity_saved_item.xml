@@ -27,6 +27,12 @@
             android:text="@string/favourites"
             android:textColor="@color/black"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="readAllDocuments"
+            android:text="go" />
+
     </androidx.appcompat.widget.Toolbar>
 
 

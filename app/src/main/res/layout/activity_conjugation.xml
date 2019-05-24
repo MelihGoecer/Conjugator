@@ -49,7 +49,8 @@
                         android:id="@+id/relativeLayout_toolbar_bg"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:visibility="gone">
+                        android:visibility="gone"
+                        tools:visibility="visible">
 
                         <ImageView
                             android:id="@+id/menu_conjugator_settings_conjugation"
@@ -108,7 +109,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/Blue"
-                        android:visibility="visible">
+                        tools:visibility="gone">
 
                         <TextView
                             android:id="@+id/textView_conjugator_title"
@@ -182,7 +183,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:layout_margin="8dp" />
+                        android:layout_margin="8dp"
+                        android:text="Verb - Verb - Verb"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
 
                 </RelativeLayout>
 
@@ -190,7 +194,8 @@
                     android:id="@+id/relativeLayout_recent_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/grey_bg">
+                    android:background="@color/grey_bg"
+                    tools:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"

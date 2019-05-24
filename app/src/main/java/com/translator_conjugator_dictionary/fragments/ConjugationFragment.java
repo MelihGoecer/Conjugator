@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 
 import com.translator_conjugator_dictionary.R;
 import com.translator_conjugator_dictionary.UI.ConjugationActivity;
-import com.translator_conjugator_dictionary.modelsConj.Conjugation;
 
 public class ConjugationFragment extends Fragment {
     private static final String TAG = "ConjugationFragment";
